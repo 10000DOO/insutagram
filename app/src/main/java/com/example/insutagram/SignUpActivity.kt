@@ -27,7 +27,7 @@ class SignUpActivity: AppCompatActivity() {
             .addOnCompleteListener(this){
                 if(it.isSuccessful){
                     startActivity(
-                        Intent(this,MainActivity::class.java))
+                        Intent(this,LoginActivity::class.java))
                     finish()
                 }
                 else{

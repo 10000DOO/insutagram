@@ -13,9 +13,6 @@ class MainActivity : AppCompatActivity() {
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //초기 화면은 로그인 화면
-        startActivity(
-            Intent(this,LoginActivity::class.java))
 
         //로그인이 안되어있으면 로그인 화면으로 이동
         if(Firebase.auth.currentUser==null){
@@ -23,5 +20,7 @@ class MainActivity : AppCompatActivity() {
                 Intent(this,LoginActivity::class.java))
             finish()
         }
+
+
     }
 }
