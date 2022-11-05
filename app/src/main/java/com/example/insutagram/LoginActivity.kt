@@ -18,7 +18,7 @@ class LoginActivity:AppCompatActivity() {
         setContentView(binding.root)
 
         binding.login.setOnClickListener{
-            val userEmail = binding.username.text.toString()
+            val userEmail = binding.userName.text.toString()
             val password = binding.password.text.toString()
             doLogin(userEmail,password)
         }
