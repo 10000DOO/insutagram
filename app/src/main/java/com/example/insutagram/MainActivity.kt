@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         //로그인이 안되어있으면 로그인 화면으로 이동
         if (Firebase.auth.currentUser == null) {
             startActivity(
