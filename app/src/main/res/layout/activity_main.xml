@@ -43,24 +43,15 @@
         android:orientation="horizontal"
         android:layout_below="@id/custom_toolbar"/>
 
-    <FrameLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/contents"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/nav_division"
         android:layout_below="@id/division"
         android:foregroundGravity="center_vertical" >
+    </androidx.recyclerview.widget.RecyclerView>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="59dp"
-            android:layout_height="111dp"
-            app:backgroundTint="#3C3C3C"
-            android:layout_gravity="bottom|right"
-            android:layout_margin="8dp"
-            android:clickable="true"
-            app:srcCompat="@android:drawable/ic_input_add" />
-    </FrameLayout>
     <LinearLayout
         android:id="@+id/nav_division"
         android:layout_width="match_parent"
