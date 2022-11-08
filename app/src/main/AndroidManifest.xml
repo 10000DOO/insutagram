@@ -13,20 +13,17 @@
         android:theme="@style/Theme.Insutagram"
         tools:targetApi="31">
         <activity
-<<<<<<< HEAD
             android:name=".PostActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-=======
-            android:name=".SignUpActivity"
-            />
+            <activity
+                android:name=".SignUpActivity" />
         <activity
             android:name=".LoginActivity"
             />
->>>>>>> 1a66fce6ea2516ab7c1962261546864aab18e89f
         <activity
             android:name=".MainActivity"
             android:exported="true">

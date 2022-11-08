@@ -3,10 +3,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
-<<<<<<< HEAD
-=======
     id 'com.google.firebase.crashlytics'
->>>>>>> 1a66fce6ea2516ab7c1962261546864aab18e89f
 }
 
 android {
@@ -55,15 +52,9 @@ dependencies{
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
     implementation 'com.google.firebase:firebase-auth-ktx'
-<<<<<<< HEAD
 
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx'
-}
-=======
     implementation 'androidx.fragment:fragment-ktx:1.5.4'
-    implementation 'com.google.firebase:firebase-firestore-ktx'
-    implementation 'com.google.firebase:firebase-storage-ktx'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 }
->>>>>>> 1a66fce6ea2516ab7c1962261546864aab18e89f

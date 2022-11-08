@@ -12,20 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="55dp">
 
-<<<<<<< HEAD
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/post_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="38dp"
-        android:layout_marginBottom="40dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-=======
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -81,4 +67,3 @@
         app:showAsAction="always"
         app:menu="@menu/nav_menu" />
 </RelativeLayout>
->>>>>>> 1a66fce6ea2516ab7c1962261546864aab18e89f
