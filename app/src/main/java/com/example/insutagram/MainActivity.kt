@@ -16,8 +16,6 @@ import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity(){
     private lateinit var binding: ActivityMainBinding
-    private val db: FirebaseFirestore = Firebase.firestore
-    private val itemsCollectionRef = db.collection("content")
     private var adapter: CustomAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,16 +43,7 @@ class MainActivity : AppCompatActivity(){
         adapter = CustomAdapter(this, emptyList())
         binding.contents.adapter = adapter
 
-        updateList()
-    }
 
-    private fun updateList() {
-        itemsCollectionRef.get().addOnSuccessListener {
-            val items = mutableListOf<ContentDTO>()
-            for (doc in it) {
-                items.add(ContentDTO(doc))
-            }
-            adapter?.updateList(items)
-        }
+        adapter!!.updatePost()
     }
 }
