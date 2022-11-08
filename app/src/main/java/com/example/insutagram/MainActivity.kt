@@ -3,6 +3,8 @@ package com.example.insutagram
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.fragment.app.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.insutagram.databinding.ActivityMainBinding
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity(){
 //                R.id.home_icon ->
 //                R.id.search_icon ->
 //                R.id.profile_icon ->
+//                R.id.add_post ->
 //            }
 //            true
 //        }
