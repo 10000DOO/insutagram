@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.*
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.insutagram.databinding.ActivityMainBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -14,6 +15,9 @@ import com.google.firebase.ktx.Firebase
 class MainActivity : AppCompatActivity(){
     private lateinit var binding: ActivityMainBinding
     private val db: FirebaseFirestore = Firebase.firestore
+    private val itemsCollectionRef = db.collection("content")
+    private var adapter: CustomAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -34,13 +38,20 @@ class MainActivity : AppCompatActivity(){
 //            }
 //            true
 //        }
+        binding.contents.layoutManager = LinearLayoutManager(this)
+        adapter = CustomAdapter(this, emptyList())
+        binding.contents.adapter = adapter
 
-        val itemsCollectionRef = db.collection("content")
+        updateList()
+    }
+
+    private fun updateList() {
         itemsCollectionRef.get().addOnSuccessListener {
-            var items = mutableListOf<ContentDTO>()
-            for (doc in it){
+            val items = mutableListOf<ContentDTO>()
+            for (doc in it) {
                 items.add(ContentDTO(doc))
             }
+            adapter?.updateList(items)
         }
     }
 }

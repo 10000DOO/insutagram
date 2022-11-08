@@ -31,8 +31,8 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item = items[position]
         holder.binding.userId.text = item.userId
-        holder.binding.likeCount.text = item.likeCount
-        holder.binding.commentCount.text = item.commentsCount
+        holder.binding.likeCount.text = "좋아요 ${item.likeCount}"
+        holder.binding.commentCount.text = "댓글 ${item.commentsCount}"
     }
 
     override fun getItemCount(): Int {
