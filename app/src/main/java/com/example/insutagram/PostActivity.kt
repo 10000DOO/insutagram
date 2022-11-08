@@ -42,7 +42,7 @@ class PostActivity : AppCompatActivity() {
                 result ->
             //사진 받는 부분
             photoUri = result.data?.data
-            findViewById<ImageView>(R.id.imageView2).setImageURI(photoUri)
+            findViewById<ImageView>(R.id.imageView).setImageURI(photoUri)
         }
 
         //사진추가 버튼
@@ -84,7 +84,7 @@ class PostActivity : AppCompatActivity() {
                 Toast.makeText(this,"업로드에 성공하였습니다.", Toast.LENGTH_LONG).show()
 
                 //페이지 나오기. 액티비티 종료
-                //finish()
+                finish()
 
             }
         }
@@ -96,5 +96,5 @@ class PostActivity : AppCompatActivity() {
         var path = MediaStore.Images.Media.insertImage(context.contentResolver,bitmap,"Title",null)
         return Uri.parse(path)
     }
-    
+
 }
