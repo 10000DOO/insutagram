@@ -1,11 +1,15 @@
 package com.example.insutagram
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.fragment.app.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.insutagram.databinding.ActivityMainBinding

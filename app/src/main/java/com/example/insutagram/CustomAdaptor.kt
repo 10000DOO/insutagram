@@ -1,32 +1,24 @@
 package com.example.insutagram
+import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.insutagram.databinding.PostBinding
+import com.example.insutagram.dto.Content
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
-
-
-data class ContentDTO( var userId: String, var likeCount: String, var commentsCount: String, var postContent: String){
-    constructor(doc: QueryDocumentSnapshot) :
-            this(doc["userId"].toString(), doc["likeCount"].toString(), doc["commentCount"].toString(), doc["postContent"].toString())
-}
 
 private val db: FirebaseFirestore = Firebase.firestore
-private val itemsCollectionRef = db.collection("content")
+private val itemsCollectionRef = db.collection("images")
 
 class ViewHolder(val binding: PostBinding) : RecyclerView.ViewHolder(binding.root)
 
-class CustomAdapter(private val context: Context, private var items: List<ContentDTO>) :
+class CustomAdapter(private val context: Context, private var items: List<Content>) :
     RecyclerView.Adapter<ViewHolder>() {
 
-    fun updateList(newList: List<ContentDTO>) {
+    fun updateList(newList: List<Content>) {
         items = newList
         notifyDataSetChanged()
     }
@@ -40,9 +32,9 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item = items[position]
         holder.binding.userId.text = item.userId
-        holder.binding.likeCount.text = "좋아요 ${item.likeCount}"
-        holder.binding.commentCount.text = "댓글 ${item.commentsCount}"
-        holder.binding.postContent.text = item.postContent
+        holder.binding.likeCount.text = "좋아요 ${item.favoriteCount}"
+        //holder.binding.commentCount.text = "댓글 ${item.commentsCount}"
+        holder.binding.postContent.text = item.post_text
     }
 
     override fun getItemCount(): Int {
@@ -51,9 +43,9 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
 
     fun updatePost() {
         itemsCollectionRef.get().addOnSuccessListener {
-            val items = mutableListOf<ContentDTO>()
+            val items = mutableListOf<Content>()
             for (doc in it) {
-                items.add(ContentDTO(doc))
+                items.add(Content(doc))
             }
             updateList(items)
         }

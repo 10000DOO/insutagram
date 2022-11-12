@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import com.example.insutagram.dto.Content
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -70,16 +71,16 @@ class PostActivity : AppCompatActivity() {
             }.addOnCompleteListener {
                     downloadUrl ->
 
-                var DBModel = DBModel()
+                var Content = Content()
 
-                DBModel.imageUrl = downloadUrl.result.toString()
-                DBModel.post_text = findViewById<EditText>(R.id.addphoto_edit_explain).text.toString()
-                DBModel.uid = auth?.currentUser?.uid
-                DBModel.userId = auth?.currentUser?.email
-                DBModel.timestamp = System.currentTimeMillis()
+                Content.imageUrl = downloadUrl.result.toString()
+                Content.post_text = findViewById<EditText>(R.id.addphoto_edit_explain).text.toString()
+                Content.uid = auth?.currentUser?.uid
+                Content.userId = auth?.currentUser?.email
+                Content.timestamp = (System.currentTimeMillis()).toString()
 
                 //collection(Collection 이름). document(Doucument 이름/ 아무것도 안넣으면 무작위 생성).set(입력할 데이터)
-                firestore.collection("images").document().set(DBModel)
+                firestore.collection("images").document().set(Content)
 
                 Toast.makeText(this,"업로드에 성공하였습니다.", Toast.LENGTH_LONG).show()
 
