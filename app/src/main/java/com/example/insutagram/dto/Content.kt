@@ -9,11 +9,15 @@ data class Content (
     var userId : String? = null, //you6878@icloud.com
     var timestamp : String? = null, //업로드 시간
     var favoriteCount : String? = null, //좋아요 카운트
-    var favorites : MutableMap<String,Boolean> = HashMap() // 좋아요 적용, 취소 기능 위해서 존재
+    //var favorites : MutableMap<String,Boolean> = HashMap() // 좋아요 적용, 취소 기능 위해서 존재
+    var favoriteCheck: Boolean? = false, //좋아요 눌렸는지 판단
+    var documentId:String? = null // 랜덤으로 생성된 도큐먼트 이름 저장
     ) {
     constructor(doc: QueryDocumentSnapshot) :
             this(doc["post_text"].toString(), doc["imageUrl"].toString(), doc["uid"].toString(),
-                doc["userId"].toString(), doc["timestamp"].toString(), doc["favoriteCount"].toString(),)
+                doc["userId"].toString(), doc["timestamp"].toString(), doc["favoriteCount"].toString(),
+                doc["favoriteCheck"] as Boolean,doc["documentId"].toString()
+            )
 }
 
 
