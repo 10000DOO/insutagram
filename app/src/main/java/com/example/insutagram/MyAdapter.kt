@@ -62,12 +62,13 @@ class MyAdapter(private val context: Context, private var items: List<UserDTO>) 
     override fun onBindViewHolder(holder: ViewHolder1, position: Int) {
         var item = items[position]
         holder.binding.userName.text=item.name
+
         db.collection("follow").document(item.uid).get().addOnSuccessListener {
             var followDTO = it.toObject(FollowDTO::class.java)
             println(followDTO)
+
             if(followDTO!!.followers.containsKey(currentUid))
                 holder.binding.toggleButton.isChecked=true
-
 
         }
         holder.binding.toggleButton.setOnClickListener{

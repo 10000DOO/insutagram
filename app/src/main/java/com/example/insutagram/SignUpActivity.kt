@@ -7,8 +7,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.insutagram.databinding.ActivityLoginBinding
 import com.example.insutagram.databinding.ActivitySignupBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+
+
+private val db: FirebaseFirestore = Firebase.firestore
 
 class SignUpActivity: AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
@@ -20,6 +26,7 @@ class SignUpActivity: AppCompatActivity() {
         binding.signUp.setOnClickListener{
             val userEmail = binding.username2.text.toString()
             val password = binding.password2.text.toString()
+
             doSignUp(userEmail,password)
         }
     }
@@ -28,8 +35,20 @@ class SignUpActivity: AppCompatActivity() {
         Firebase.auth.createUserWithEmailAndPassword(userEmail,password)
             .addOnCompleteListener(this){
                 if(it.isSuccessful){
+                    //유아이디 가져오고
+                    var currentUid = FirebaseAuth.getInstance().currentUser!!.uid
+                    val itemMap = hashMapOf(
+                        "uid" to currentUid,
+                        "name" to userEmail
+                    )
+                    //db에 넣기
+                    println(itemMap)
+                    db.collection("test").document(currentUid).set(itemMap)
+                    val intent =Intent(this,LoginActivity::class.java)
+                    intent.putExtra("key1",userEmail)
                     startActivity(
-                        Intent(this,LoginActivity::class.java))
+                        intent
+                    )
                     finish()
                 }
                 else{
