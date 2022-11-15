@@ -65,15 +65,16 @@ class PostActivity : AppCompatActivity() {
         val imageFileName = "IMAGE_" + timestamp + ".png"
         var storagePath = storage.reference?.child("images")?.child(imageFileName)
 
-        if (storagePath != null) {
-            storagePath.putFile(photoUri!!).continueWithTask {
-                return@continueWithTask storagePath.downloadUrl
-            }.addOnCompleteListener {
-                    downloadUrl ->
-
+//        if (storagePath != null) {
+//            storagePath.putFile(photoUri!!).continueWithTask {
+//                return@continueWithTask storagePath.downloadUrl
+//            }.addOnCompleteListener { downloadUrl ->
+//
+//
+//        }
                 var Content = Content()
 
-                Content.imageUrl = downloadUrl.result.toString()
+//                Content.imageUrl = downloadUrl.result.toString()
                 Content.post_text = findViewById<EditText>(R.id.addphoto_edit_explain).text.toString()
                 Content.uid = auth?.currentUser?.uid
                 Content.userId = auth?.currentUser?.email
@@ -90,7 +91,7 @@ class PostActivity : AppCompatActivity() {
             }
         }
 
-    }
+//    }
     fun getImageUri(context : Context, bitmap : Bitmap): Uri? {
         var bytes = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,bytes)
@@ -98,4 +99,3 @@ class PostActivity : AppCompatActivity() {
         return Uri.parse(path)
     }
 
-}
