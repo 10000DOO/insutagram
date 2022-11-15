@@ -6,7 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.insutagram.databinding.ActivityLoginBinding
-import com.example.insutagram.databinding.ActivityMainBinding
+
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
