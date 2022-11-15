@@ -43,6 +43,9 @@ class MainActivity : AppCompatActivity(){
             }else if (item.itemId == R.id.add_post){
                 startActivity(Intent(this, PostActivity::class.java))
             }
+            else if (item.itemId == R.id.search_icon){
+                startActivity(Intent(this, SearchActivity::class.java))
+            }
             true
         }
         binding.contents.layoutManager = LinearLayoutManager(this)
