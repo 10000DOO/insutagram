@@ -6,9 +6,13 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.insutagram.databinding.ActivityLoginBinding
+import com.google.firebase.auth.FirebaseAuth
 
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+
 
 class LoginActivity:AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -17,10 +21,20 @@ class LoginActivity:AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val value1 = intent?.getStringExtra("key1")
+        println(value1)
+        if(value1 !=null)
+            binding.userName.setText(value1.toString())
+
         binding.login.setOnClickListener{
-            val userEmail = binding.userName.text.toString()
+
+            var userEmail:String
             val password = binding.password.text.toString()
-            doLogin(userEmail,password)
+
+
+                userEmail = binding.userName.text.toString()
+                doLogin(userEmail,password)
+
         }
         binding.createAccount.setOnClickListener{
             //val userEmail = binding.username.text.toString()
