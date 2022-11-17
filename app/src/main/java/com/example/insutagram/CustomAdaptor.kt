@@ -6,12 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.insutagram.databinding.PostBinding
 import com.example.insutagram.dto.Content
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 private val db: FirebaseFirestore = Firebase.firestore
 private val itemsCollectionRef = db.collection("images")
+var currentUid = FirebaseAuth.getInstance().currentUser!!.uid
 
 class ViewHolder(val binding: PostBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -42,10 +44,12 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item = items[position]
+        println("item = "+item)
         holder.binding.userId.text = item.userId
         holder.binding.likeCount.text = "좋아요 ${item.favoriteCount}"
         //holder.binding.commentCount.text = "댓글 ${item.commentsCount}"
         holder.binding.postContent.text = item.post_text
+
         if (item.favoriteCheck == true){
             holder.binding.favoriteButton.setImageResource(R.drawable.ic_favorite)
         }else{
@@ -70,14 +74,37 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
         return items.size
     }
 
+
+
+    //자신의 uid와 팔로우 한 uid들만 데이터 가져옴
     fun updatePost() {
+        var followDTO: FollowDTO
+        var itemss : MutableList<Content> = mutableListOf<Content>()
         itemsCollectionRef.get().addOnSuccessListener {
-            val items = mutableListOf<Content>()
+
+            //val items = mutableListOf<Content>()
             for (doc in it) {
-                items.add(Content(doc))
+                //println("followkey = " + Content(doc).uid)
+                db.collection("follow").document(Content(doc).uid!!).get().addOnSuccessListener {
+                    followDTO = it.toObject(FollowDTO::class.java)!!
+                    if(followDTO.followers.containsKey(currentUid)){
+                        println("있어")
+                        itemss.add(Content(doc))
+                        //println("*******************************************"+itemss)
+                        updateList(itemss)
+                    }
+                    else if(!followDTO.followers.containsKey(currentUid))
+                        println("없어")
+                }
+                //자신의 게시글 불러옴
+                if((Content(doc).uid == currentUid)){
+                    itemss.add(Content(doc))
+                    updateList(itemss)
+                }
             }
-            updateList(items)
+            updateList(itemss)
             snapshotList()
         }
     }
+
 }

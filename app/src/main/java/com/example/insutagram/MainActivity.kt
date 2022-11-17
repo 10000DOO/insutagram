@@ -54,5 +54,6 @@ class MainActivity : AppCompatActivity(){
 
 
         adapter!!.updatePost()
+        //adapter!!.queryWhere()
     }
 }
