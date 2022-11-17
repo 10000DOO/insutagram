@@ -63,8 +63,8 @@ class SignUpActivity: AppCompatActivity() {
 
     private fun doSignUp(userEmail: String, password: String) {
         val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val imageFileName = "IMAGE_" + timestamp + ".png"
-        var storagePath = storage.reference?.child("images")?.child(imageFileName)
+        val imageFileName = "profile_img_" + timestamp + ".png"
+        var storagePath = storage.reference?.child("profile_img")?.child(imageFileName)
 
 
         if (storagePath != null) {
@@ -82,7 +82,7 @@ class SignUpActivity: AppCompatActivity() {
                             val itemMap = hashMapOf(
                                 "uid" to currentUid,
                                 "name" to userEmail,
-                                "img" to downloadUrl.result.toString()
+                                "profile_img" to downloadUrl.result.toString()
                             )
 
                             //db에 넣기
