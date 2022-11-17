@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -43,11 +44,11 @@ class SignUpActivity: AppCompatActivity() {
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 //사진 받는 부분
                 photoUri = result.data?.data
-                findViewById<ImageView>(R.id.imageView).setImageURI(photoUri)
+                findViewById<ImageButton>(R.id.imageButton).setImageURI(photoUri)
             }
 
         //사진추가 버튼
-        binding.add.setOnClickListener {
+        binding.imageButton.setOnClickListener {
             photoResult.launch(photoPickerIntent)
         }
 
@@ -88,6 +89,7 @@ class SignUpActivity: AppCompatActivity() {
                             //db에 넣기
                             println(itemMap)
                             db.collection("test").document(currentUid).set(itemMap)
+                            //db!!.collection("follow").document(currentUid!!)
                             val intent = Intent(this, LoginActivity::class.java)
                             intent.putExtra("key1", userEmail)
                             startActivity(

@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">insutagram</string>
     <string name="insutagram">Insutagram</string>
+    <string name="insutagram_signUp">Insutagram 회원가입</string>
+    <string name="insutagram_login">Insutagram 로그인</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
