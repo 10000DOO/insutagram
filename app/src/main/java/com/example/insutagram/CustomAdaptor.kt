@@ -13,6 +13,7 @@ import com.google.firebase.ktx.Firebase
 
 private val db: FirebaseFirestore = Firebase.firestore
 private val itemsCollectionRef = db.collection("images")
+private val followCollectionRef = db.collection("follow")
 var currentUid = FirebaseAuth.getInstance().currentUser!!.uid
 
 class ViewHolder(val binding: PostBinding) : RecyclerView.ViewHolder(binding.root)
@@ -21,19 +22,11 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
     RecyclerView.Adapter<ViewHolder>() {
 
     var contentUidList = arrayListOf<String>()
+    var favoriteClick = HashMap<String,Boolean>()
 
     fun updateList(newList: List<Content>) {
         items = newList
         notifyDataSetChanged()
-    }
-    fun snapshotList(){
-        itemsCollectionRef?.addSnapshotListener{querySnapshot, firebaseFirestoreException ->
-            contentUidList.clear()
-            for (snapshot in querySnapshot!!.documents) {
-                contentUidList.add(snapshot.id)
-            }
-            notifyDataSetChanged()
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -44,27 +37,27 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item = items[position]
-        println("item = "+item)
         holder.binding.userId.text = item.userId
         holder.binding.likeCount.text = "좋아요 ${item.favoriteCount}"
-        //holder.binding.commentCount.text = "댓글 ${item.commentsCount}"
         holder.binding.postContent.text = item.post_text
 
-        if (item.favoriteCheck == true){
+        if (item.favoriteCheck.get(currentUid) == true){
             holder.binding.favoriteButton.setImageResource(R.drawable.ic_favorite)
         }else{
             holder.binding.favoriteButton.setImageResource(R.drawable.ic_favorite_border)
         }
         holder.binding.favoriteButton.setOnClickListener {
-            if (item.favoriteCheck == false){
+            if (item.favoriteCheck.get(currentUid) == null || item.favoriteCheck.get(currentUid) == false){
                 holder.binding.favoriteButton.setImageResource(R.drawable.ic_favorite)
                 itemsCollectionRef.document(contentUidList[position]).update("favoriteCount",(item.favoriteCount?.toInt()?.plus(1)))
-                itemsCollectionRef.document(contentUidList[position]).update("favoriteCheck",true)
+                favoriteClick.put(currentUid, true)
+                itemsCollectionRef.document(contentUidList[position]).update("favoriteCheck",favoriteClick)
                 updatePost()
             }else{
                 holder.binding.favoriteButton.setImageResource(R.drawable.ic_favorite_border)
                 itemsCollectionRef.document(contentUidList[position]).update("favoriteCount",(item.favoriteCount?.toInt()?.minus(1)))
-                itemsCollectionRef.document(contentUidList[position]).update("favoriteCheck",false)
+                favoriteClick.put(currentUid, false)
+                itemsCollectionRef.document(contentUidList[position]).update("favoriteCheck",favoriteClick)
                 updatePost()
             }
         }
@@ -85,11 +78,12 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
             //val items = mutableListOf<Content>()
             for (doc in it) {
                 //println("followkey = " + Content(doc).uid)
-                db.collection("follow").document(Content(doc).uid!!).get().addOnSuccessListener {
+                followCollectionRef.document(Content(doc).uid!!).get().addOnSuccessListener {
                     followDTO = it.toObject(FollowDTO::class.java)!!
                     if(followDTO.followers.containsKey(currentUid)){
                         println("있어")
                         itemss.add(Content(doc))
+                        contentUidList.add(doc.id)
                         //println("*******************************************"+itemss)
                         updateList(itemss)
                     }
@@ -99,11 +93,11 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
                 //자신의 게시글 불러옴
                 if((Content(doc).uid == currentUid)){
                     itemss.add(Content(doc))
+                    contentUidList.add(doc.id)
                     updateList(itemss)
                 }
             }
             updateList(itemss)
-            snapshotList()
         }
     }
 
