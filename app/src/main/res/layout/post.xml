@@ -22,9 +22,14 @@
             android:layout_height="wrap_content"
             android:text="username"/>
     </LinearLayout>
-    <TextView
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:id="@+id/content_image"
+        android:scaleType="fitXY"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
         android:id="@+id/post_content"
         android:text="게시글 입니다."/>
     <RelativeLayout

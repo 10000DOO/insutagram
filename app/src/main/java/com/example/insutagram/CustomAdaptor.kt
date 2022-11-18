@@ -1,8 +1,10 @@
 package com.example.insutagram
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.insutagram.databinding.PostBinding
 import com.example.insutagram.dto.Content
@@ -10,10 +12,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 private val db: FirebaseFirestore = Firebase.firestore
 private val itemsCollectionRef = db.collection("images")
 private val followCollectionRef = db.collection("follow")
+private val testCollectionRef = db.collection("test")
 var currentUid = FirebaseAuth.getInstance().currentUser!!.uid
 
 class ViewHolder(val binding: PostBinding) : RecyclerView.ViewHolder(binding.root)
@@ -21,8 +25,10 @@ class ViewHolder(val binding: PostBinding) : RecyclerView.ViewHolder(binding.roo
 class CustomAdapter(private val context: Context, private var items: List<Content>) :
     RecyclerView.Adapter<ViewHolder>() {
 
+    var storage = Firebase.storage
     var contentUidList = arrayListOf<String>()
     var favoriteClick = HashMap<String,Boolean>()
+    var image = arrayListOf<String>()
 
     fun updateList(newList: List<Content>) {
         items = newList
@@ -37,9 +43,30 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item = items[position]
+
+        testCollectionRef.document(item.uid!!).get().addOnSuccessListener {
+            val imageRef2 = storage.getReferenceFromUrl(it["profile_img"].toString())
+            imageRef2.getBytes(Long.MAX_VALUE).addOnCompleteListener{//successListener도 가능
+                if(it.isSuccessful){
+                    val bmp = BitmapFactory.decodeByteArray(it.result, 0, it.result.size)
+                    holder.binding.profileImage.setImageBitmap(bmp)
+                }
+            }
+        }
         holder.binding.userId.text = item.userId
         holder.binding.likeCount.text = "좋아요 ${item.favoriteCount}"
         holder.binding.postContent.text = item.post_text
+
+        itemsCollectionRef.document(contentUidList[position]).get().addOnSuccessListener {
+            val imageRef2 = storage.getReferenceFromUrl(it["imageUrl"].toString())
+            imageRef2.getBytes(Long.MAX_VALUE).addOnCompleteListener{//successListener도 가능
+                if(it.isSuccessful){
+                    val bmp = BitmapFactory.decodeByteArray(it.result, 0, it.result.size)
+                    holder.binding.contentImage.setImageBitmap(bmp)
+                }
+            }
+
+        }
 
         if (item.favoriteCheck.get(currentUid) == true){
             holder.binding.favoriteButton.setImageResource(R.drawable.ic_favorite)
@@ -66,8 +93,6 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
     override fun getItemCount(): Int {
         return items.size
     }
-
-
 
     //자신의 uid와 팔로우 한 uid들만 데이터 가져옴
     fun updatePost() {
