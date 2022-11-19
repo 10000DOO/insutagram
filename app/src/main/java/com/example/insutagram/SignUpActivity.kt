@@ -67,7 +67,7 @@ class SignUpActivity: AppCompatActivity() {
         val imageFileName = "profile_img_" + timestamp + ".png"
         var storagePath = storage.reference?.child("profile_img")?.child(imageFileName)
 
-
+        println(storagePath)
         if (storagePath != null) {
             storagePath.putFile(photoUri!!).continueWithTask {
                 return@continueWithTask storagePath.downloadUrl
@@ -85,7 +85,6 @@ class SignUpActivity: AppCompatActivity() {
                                 "name" to userEmail,
                                 "profile_img" to downloadUrl.result.toString()
                             )
-
                             //db에 넣기
                             println(itemMap)
                             db.collection("test").document(currentUid).set(itemMap)
@@ -103,6 +102,9 @@ class SignUpActivity: AppCompatActivity() {
                         }
                     }
             }
+        }
+        else if(storagePath == null){
+            println("사진 선택 안함")
         }
     }
 }

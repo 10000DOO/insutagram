@@ -2,6 +2,7 @@ package com.example.insutagram
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.google.firebase.firestore.auth.User
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import java.util.HashMap
 
 
@@ -26,11 +28,8 @@ data class UserDTO( var uid: String,var name: String){
             this(doc["uid"].toString(), doc["name"].toString())
 }
 data class FollowDTO(
-    //var name:String,
-    //var uid:String,
     var followerCount: Int = 0,
     var followers: MutableMap<String, Boolean> = HashMap(),
-
     var followingCount: Int = 0,
     var followings: MutableMap<String, Boolean> = HashMap()
 )
@@ -39,6 +38,7 @@ private val db: FirebaseFirestore = Firebase.firestore
 private val itemsCollectionRef = db.collection("follow")
 class ViewHolder1(val binding: UserListBinding) : RecyclerView.ViewHolder(binding.root)
 var followListenerRegistration: ListenerRegistration? = null
+private val testCollectionRef = db.collection("test")
 lateinit var binding:UserListBinding
 lateinit var otherId:String
 
@@ -46,7 +46,7 @@ lateinit var otherId:String
 class MyAdapter(private val context: Context, private var items: List<UserDTO>) :
     RecyclerView.Adapter<ViewHolder1>() {
     var currentUid = FirebaseAuth.getInstance().currentUser!!.uid
-
+    var storage = Firebase.storage
     fun updateList(newList: List<UserDTO>) {
         items = newList
         notifyDataSetChanged()
@@ -61,6 +61,15 @@ class MyAdapter(private val context: Context, private var items: List<UserDTO>) 
 
     override fun onBindViewHolder(holder: ViewHolder1, position: Int) {
         var item = items[position]
+        testCollectionRef.document(item.uid!!).get().addOnSuccessListener {
+            val imageRef2 = storage.getReferenceFromUrl(it["profile_img"].toString())
+            imageRef2.getBytes(Long.MAX_VALUE).addOnCompleteListener{//successListener도 가능
+                if(it.isSuccessful){
+                    val bmp = BitmapFactory.decodeByteArray(it.result, 0, it.result.size)
+                    holder.binding.userImage.setImageBitmap(bmp)
+                }
+            }
+        }
         holder.binding.userName.text=item.name
 
         db.collection("follow").document(item.uid).get().addOnSuccessListener {
