@@ -126,4 +126,23 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
         }
     }
 
+    fun profile_updatePost() {
+        var followDTO: FollowDTO
+        var itemss : MutableList<Content> = mutableListOf<Content>()
+        itemsCollectionRef.get().addOnSuccessListener {
+
+            //val items = mutableListOf<Content>()
+            for (doc in it) {
+
+                //자신의 게시글 불러옴
+                if((Content(doc).uid == currentUid)){
+                    itemss.add(Content(doc))
+                    contentUidList.add(doc.id)
+                    updateList(itemss)
+                }
+            }
+            updateList(itemss)
+        }
+    }
+
 }
