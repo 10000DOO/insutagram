@@ -46,7 +46,7 @@
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/post_main_img"
+        android:id="@+id/postMainImg"
         android:layout_width="350dp"
         android:layout_height="350dp"
         android:layout_marginTop="20dp"
@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <ImageView
-            android:id="@+id/post_main_image"
+            android:id="@+id/postMainImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/ic_launcher_background"
@@ -65,7 +65,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/post_main_content"
+        android:id="@+id/postMainContent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="15dp"
@@ -86,7 +86,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/post_main_img">
+        app:layout_constraintTop_toBottomOf="@+id/postMainImg">
 
         <RelativeLayout
             android:layout_width="35dp"
@@ -111,21 +111,6 @@
             android:id="@+id/likeCount"
             android:textSize="20dp"
             android:layout_width="51dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:text="0" />
-
-        <ImageButton
-            android:id="@+id/comment_image"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_margin="7.5dp"
-            app:srcCompat="@drawable/ic_baseline_comment_24" />
-
-        <TextView
-            android:id="@+id/commentCount"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
