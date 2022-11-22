@@ -87,8 +87,8 @@ class PostActivity : AppCompatActivity() {
                 Toast.makeText(this, "업로드에 성공하였습니다.", Toast.LENGTH_LONG).show()
 
                 //페이지 나오기. 액티비티 종료
-                finish()
-
+                //finish()
+                startActivity(Intent(this, MainActivity::class.java))
             }
         }
 

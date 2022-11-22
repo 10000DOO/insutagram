@@ -169,4 +169,5 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
             updateList(itemss)
         }
     }
+
 }
