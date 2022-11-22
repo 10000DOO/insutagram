@@ -1,10 +1,14 @@
 package com.example.insutagram
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.insutagram.databinding.PostBinding
 import com.example.insutagram.dto.Content
@@ -22,13 +26,18 @@ var currentUid = FirebaseAuth.getInstance().currentUser!!.uid
 
 class ViewHolder(val binding: PostBinding) : RecyclerView.ViewHolder(binding.root)
 
+
 class CustomAdapter(private val context: Context, private var items: List<Content>) :
+
+
     RecyclerView.Adapter<ViewHolder>() {
 
     var storage = Firebase.storage
     var contentUidList = arrayListOf<String>()
     var favoriteClick = HashMap<String,Boolean>()
     var image = arrayListOf<String>()
+
+
 
     fun updateList(newList: List<Content>) {
         items = newList
@@ -42,8 +51,8 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        //println("%%%%%%%%%%%%%%%"+contentUidList[position])
         var item = items[position]
-
         testCollectionRef.document(item.uid!!).get().addOnSuccessListener {
             val imageRef2 = storage.getReferenceFromUrl(it["profile_img"].toString())
             imageRef2.getBytes(Long.MAX_VALUE).addOnCompleteListener{//successListener도 가능
@@ -56,7 +65,19 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
         holder.binding.userId.text = item.userId
         holder.binding.likeCount.text = "좋아요 ${item.favoriteCount}"
         holder.binding.postContent.text = item.post_text
+        //게시글 클릭시 상세 페이지로 이동
 
+        holder.binding.contentImage.setOnClickListener{
+            println(item.uid)
+            val intent = Intent(holder.binding.root.context,DetailActivity::class.java)
+            println(intent)
+            intent.putExtra("key1", item)
+            intent.putExtra("postID",contentUidList[position])
+            holder.binding.root.context.startActivity(intent)
+
+            //startActivity(context,intent,null)
+            //intent.run{binding.root.context.startActivity(this)}
+        }
         itemsCollectionRef.document(contentUidList[position]).get().addOnSuccessListener {
             val imageRef2 = storage.getReferenceFromUrl(it["imageUrl"].toString())
             imageRef2.getBytes(Long.MAX_VALUE).addOnCompleteListener{//successListener도 가능
@@ -67,28 +88,32 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
             }
 
         }
-
-        if (item.favoriteCheck.get(currentUid) == true){
-            holder.binding.favoriteButton.setImageResource(R.drawable.ic_favorite)
-        }else{
-            holder.binding.favoriteButton.setImageResource(R.drawable.ic_favorite_border)
-        }
-        holder.binding.favoriteButton.setOnClickListener {
-            if (item.favoriteCheck.get(currentUid) == null || item.favoriteCheck.get(currentUid) == false){
+        //fun checkLike(){
+            if (item.favoriteCheck.get(currentUid) == true){
                 holder.binding.favoriteButton.setImageResource(R.drawable.ic_favorite)
-                itemsCollectionRef.document(contentUidList[position]).update("favoriteCount",(item.favoriteCount?.toInt()?.plus(1)))
-                favoriteClick.put(currentUid, true)
-                itemsCollectionRef.document(contentUidList[position]).update("favoriteCheck",favoriteClick)
-                updatePost()
             }else{
                 holder.binding.favoriteButton.setImageResource(R.drawable.ic_favorite_border)
-                itemsCollectionRef.document(contentUidList[position]).update("favoriteCount",(item.favoriteCount?.toInt()?.minus(1)))
-                favoriteClick.put(currentUid, false)
-                itemsCollectionRef.document(contentUidList[position]).update("favoriteCheck",favoriteClick)
-                updatePost()
             }
-        }
+            holder.binding.favoriteButton.setOnClickListener {
+                if (item.favoriteCheck.get(currentUid) == null || item.favoriteCheck.get(currentUid) == false){
+                    holder.binding.favoriteButton.setImageResource(R.drawable.ic_favorite)
+                    itemsCollectionRef.document(contentUidList[position]).update("favoriteCount",(item.favoriteCount?.toInt()?.plus(1)))
+                    favoriteClick.put(currentUid, true)
+                    itemsCollectionRef.document(contentUidList[position]).update("favoriteCheck",favoriteClick)
+                    updatePost()
+                }else{
+                    holder.binding.favoriteButton.setImageResource(R.drawable.ic_favorite_border)
+                    itemsCollectionRef.document(contentUidList[position]).update("favoriteCount",(item.favoriteCount?.toInt()?.minus(1)))
+                    favoriteClick.put(currentUid, false)
+                    itemsCollectionRef.document(contentUidList[position]).update("favoriteCheck",favoriteClick)
+                    updatePost()
+                }
+            }
+        //}
+        //checkLike()
+
     }
+
 
     override fun getItemCount(): Int {
         return items.size
@@ -126,6 +151,7 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
         }
     }
 
+<<<<<<< Updated upstream
     fun profile_updatePost() {
         var followDTO: FollowDTO
         var itemss : MutableList<Content> = mutableListOf<Content>()
@@ -144,5 +170,7 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
             updateList(itemss)
         }
     }
+=======
+>>>>>>> Stashed changes
 
 }

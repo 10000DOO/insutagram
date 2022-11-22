@@ -1,6 +1,7 @@
 package com.example.insutagram.dto
 
 import com.google.firebase.firestore.QueryDocumentSnapshot
+import java.io.Serializable
 
 data class Content (
     var userId : String? = null, //you6878@icloud.com
@@ -12,7 +13,7 @@ data class Content (
     //var favorites : MutableMap<String,Boolean> = HashMap() // 좋아요 적용, 취소 기능 위해서 존재
     var favoriteCheck: Map<String,Boolean> = HashMap(), //좋아요 눌렸는지 판단
     var documentId:String? = null // 랜덤으로 생성된 도큐먼트 이름 저장
-    ) {
+    ) : Serializable {
     constructor(doc: QueryDocumentSnapshot) :
             this(doc["userId"].toString(), doc["uid"].toString(), doc["post_text"].toString(), doc["imageUrl"].toString(),
                  doc["timestamp"].toString(), doc["favoriteCount"].toString(),
