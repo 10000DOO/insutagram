@@ -1,11 +1,8 @@
 package com.example.insutagram
 
-import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.insutagram.databinding.ActivitySearchBinding
 import com.example.insutagram.databinding.PostDetailBinding
 import com.example.insutagram.dto.Content
 import com.google.firebase.auth.FirebaseAuth
