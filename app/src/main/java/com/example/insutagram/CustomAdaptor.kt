@@ -151,7 +151,6 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
         }
     }
 
-<<<<<<< Updated upstream
     fun profile_updatePost() {
         var followDTO: FollowDTO
         var itemss : MutableList<Content> = mutableListOf<Content>()
@@ -170,7 +169,4 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
             updateList(itemss)
         }
     }
-=======
->>>>>>> Stashed changes
-
 }
