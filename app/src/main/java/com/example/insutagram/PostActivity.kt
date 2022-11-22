@@ -79,6 +79,7 @@ class PostActivity : AppCompatActivity() {
                 Content.uid = auth?.currentUser?.uid
                 Content.userId = auth?.currentUser?.email
                 Content.timestamp = (System.currentTimeMillis()).toString()
+                Content.favoriteCount = "0"
 
                 //collection(Collection 이름). document(Doucument 이름/ 아무것도 안넣으면 무작위 생성).set(입력할 데이터)
                 firestore.collection("images").document().set(Content)
