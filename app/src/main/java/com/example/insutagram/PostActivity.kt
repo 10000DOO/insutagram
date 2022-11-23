@@ -10,7 +10,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.insutagram.dto.Content
@@ -43,11 +43,11 @@ class PostActivity : AppCompatActivity() {
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 //사진 받는 부분
                 photoUri = result.data?.data
-                findViewById<ImageView>(R.id.imageView).setImageURI(photoUri)
+                findViewById<ImageButton>(R.id.imageButton).setImageURI(photoUri)
             }
 
         //사진추가 버튼
-        findViewById<Button>(R.id.addphoto_btn_upload).setOnClickListener {
+        findViewById<ImageButton>(R.id.imageButton).setOnClickListener {
             photoResult.launch(photoPickerIntent)
         }
 
