@@ -54,7 +54,7 @@ class SignUpActivity: AppCompatActivity() {
 
 
         binding.signUp.setOnClickListener {
-            val userEmail = binding.username2.text.toString()
+            val userEmail = binding.userName2.text.toString()
             val password = binding.password2.text.toString()
 
 
