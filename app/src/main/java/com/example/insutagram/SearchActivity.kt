@@ -33,6 +33,9 @@ class SearchActivity: AppCompatActivity() {
             else if (item.itemId == R.id.search_icon){
                 startActivity(Intent(this, SearchActivity::class.java))
             }
+            else if (item.itemId == R.id.profile_icon){
+                startActivity(Intent(this, ProfileActivity::class.java))
+            }
             true
         }
         currentUid = FirebaseAuth.getInstance().currentUser!!.uid
