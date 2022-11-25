@@ -6,11 +6,18 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.insutagram.databinding.ActivityMainBinding
 import com.example.insutagram.databinding.ActivityProfileBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
     private var adapter: CustomAdapter? = null
+    val db: FirebaseFirestore = Firebase.firestore
+    val itemsCollectionRef = db.collection("images")
+    var currentUid :String = FirebaseAuth.getInstance().currentUser!!.uid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +41,18 @@ class ProfileActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
+        var count = 0
+        itemsCollectionRef.get().addOnSuccessListener {
+            for (doc in it) {
+                if (doc["uid"].toString() == currentUid)
+                    count++
+                binding.accountPostTextview.text = count.toString()
+            }
+        }
+
         binding.contents.layoutManager = LinearLayoutManager(this)
         adapter = CustomAdapter(this, emptyList())
         binding.contents.adapter = adapter
-
 
 
 
