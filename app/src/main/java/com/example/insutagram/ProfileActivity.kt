@@ -17,6 +17,7 @@ class ProfileActivity : AppCompatActivity() {
     private var adapter: CustomAdapter? = null
     val db: FirebaseFirestore = Firebase.firestore
     val itemsCollectionRef = db.collection("images")
+    val followCollectionRef = db.collection("follow")
     var currentUid :String = FirebaseAuth.getInstance().currentUser!!.uid
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +49,11 @@ class ProfileActivity : AppCompatActivity() {
                     count++
                 binding.accountPostTextview.text = count.toString()
             }
+        }
+
+        followCollectionRef.document(currentUid).get().addOnSuccessListener {
+            binding.accountFollowerTextview.text = it["followerCount"].toString()
+            binding.accountFollowingTextview.text = it["followingCount"].toString()
         }
 
         binding.contents.layoutManager = LinearLayoutManager(this)
