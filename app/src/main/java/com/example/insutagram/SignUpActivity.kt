@@ -88,7 +88,7 @@ class SignUpActivity: AppCompatActivity() {
                             //db에 넣기
                             println(itemMap)
                             db.collection("test").document(currentUid).set(itemMap)
-                            //db!!.collection("follow").document(currentUid!!)
+                            db.collection("follow").document(currentUid!!)
                             val intent = Intent(this, LoginActivity::class.java)
                             intent.putExtra("key1", userEmail)
                             startActivity(

@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.insutagram.databinding.ActivityMainBinding
 import com.example.insutagram.databinding.ActivityProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -52,8 +51,13 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         followCollectionRef.document(currentUid).get().addOnSuccessListener {
-            binding.accountFollowerTextview.text = it["followerCount"].toString()
-            binding.accountFollowingTextview.text = it["followingCount"].toString()
+            if (it["followerCount"].toString() != null){
+                binding.accountFollowerTextview.text = it["followerCount"].toString()
+            }
+            if (it["followingCount"].toString() != null){
+                binding.accountFollowingTextview.text = it["followingCount"].toString()
+            }
+
         }
 
         binding.contents.layoutManager = LinearLayoutManager(this)
