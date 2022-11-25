@@ -85,10 +85,12 @@ class SignUpActivity: AppCompatActivity() {
                                 "name" to userEmail,
                                 "profile_img" to downloadUrl.result.toString()
                             )
+
                             //db에 넣기
                             println(itemMap)
+                            val follow = FollowDTO()
                             db.collection("test").document(currentUid).set(itemMap)
-                            db.collection("follow").document(currentUid!!)
+                            db.collection("follow").document(currentUid!!).set(follow)
                             val intent = Intent(this, LoginActivity::class.java)
                             intent.putExtra("key1", userEmail)
                             startActivity(

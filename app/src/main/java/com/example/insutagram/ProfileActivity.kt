@@ -1,6 +1,7 @@
 package com.example.insutagram
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,14 +10,17 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 
 
 class ProfileActivity : AppCompatActivity() {
+    lateinit var storage: FirebaseStorage
     private lateinit var binding: ActivityProfileBinding
     private var adapter: CustomAdapter? = null
     val db: FirebaseFirestore = Firebase.firestore
     val itemsCollectionRef = db.collection("images")
     val followCollectionRef = db.collection("follow")
+    val testCollectionRef = db.collection("test")
     var currentUid :String = FirebaseAuth.getInstance().currentUser!!.uid
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +51,17 @@ class ProfileActivity : AppCompatActivity() {
                 if (doc["uid"].toString() == currentUid)
                     count++
                 binding.accountPostTextview.text = count.toString()
+            }
+        }
+        storage = FirebaseStorage.getInstance()
+
+        testCollectionRef.document(currentUid).get().addOnSuccessListener {
+            val imageRef2 = storage.getReferenceFromUrl(it["profile_img"].toString())
+            imageRef2.getBytes(Long.MAX_VALUE).addOnCompleteListener{//successListener도 가능
+                if(it.isSuccessful){
+                    val bmp = BitmapFactory.decodeByteArray(it.result, 0, it.result.size)
+                    binding.profileImage.setImageBitmap(bmp)
+                }
             }
         }
 
