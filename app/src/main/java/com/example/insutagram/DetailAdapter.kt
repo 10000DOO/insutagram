@@ -63,7 +63,7 @@ class DetailAdapter(private val context: Context, private var items: List<Conten
             }
         }
         holder.binding.userName.text = item.userId
-        holder.binding.likeCount.text = "좋아요 ${item.favoriteCount}"
+        holder.binding.likeCount.text = "좋아요 ${item.favoriteCount}개"
         holder.binding.postMainContent.text = item.post_text
         //게시글 클릭시 상세 페이지로 이동
 

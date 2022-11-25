@@ -13,6 +13,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.insutagram.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity(){
     private lateinit var binding: ActivityMainBinding
     private var adapter: CustomAdapter? = null
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -52,6 +54,12 @@ class MainActivity : AppCompatActivity(){
             }
             true
         }
+
+        val fab: View = findViewById(R.id.fab)
+        fab.setOnClickListener { view ->
+            startActivity(Intent(this, PostActivity::class.java))
+        }
+
         binding.contents.layoutManager = LinearLayoutManager(this)
         adapter = CustomAdapter(this, emptyList())
         binding.contents.adapter = adapter

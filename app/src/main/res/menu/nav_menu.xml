@@ -3,21 +3,23 @@
     <item
         android:id="@+id/home_icon"
         android:enabled="true"
-        android:title="홈"
-        android:icon="@drawable/ic_baseline_home_24"/>
+
+
+        android:icon="@drawable/ic_baseline_home_24"
+         />
     <item
         android:id="@+id/add_post"
         android:enabled="true"
-        android:title="글쓰기"
+
         android:icon="@drawable/ic_baseline_add_circle_24"/>
     <item
         android:id="@+id/search_icon"
         android:enabled="true"
-        android:title="검색"
-        android:icon="@drawable/ic_baseline_search_24"/>
+
+        android:icon="@drawable/follow"/>
     <item
         android:id="@+id/profile_icon"
         android:enabled="true"
-        android:title="프로필"
-        android:icon="@drawable/ic_baseline_person_24"/>
+
+        android:icon="@drawable/profile"/>
 </menu>

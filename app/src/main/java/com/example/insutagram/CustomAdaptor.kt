@@ -58,7 +58,7 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
             }
         }
         holder.binding.userId.text = item.userId
-        holder.binding.likeCount.text = "좋아요 ${item.favoriteCount}"
+        holder.binding.likeCount.text = "좋아요 ${item.favoriteCount}개"
         holder.binding.postContent.text = item.post_text
         //게시글 클릭시 상세 페이지로 이동
 
@@ -120,14 +120,14 @@ class CustomAdapter(private val context: Context, private var items: List<Conten
 
             //val items = mutableListOf<Content>()
             for (doc in it) {
-                //println("followkey = " + Content(doc).uid)
+                println("*****followkey = " + Content(doc).uid)
                 followCollectionRef.document(Content(doc).uid!!).get().addOnSuccessListener {
                     followDTO = it.toObject(FollowDTO::class.java)!!
                     if(followDTO.followers.containsKey(currentUid)){
                         println("있어")
                         itemss.add(Content(doc))
                         contentUidList.add(doc.id)
-                        //println("*******************************************"+itemss)
+                        println("*******************************************"+itemss)
                         updateList(itemss)
                     }
                     else if(!followDTO.followers.containsKey(currentUid))
