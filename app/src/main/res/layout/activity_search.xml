@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/pretendard_medium"
         android:layout_marginTop="16dp"
-        android:text="팔로잉"
+        android:text="팔로우"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
