@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">outsutagram</string>
-    <string name="insutagram">outsutagram</string>
-    <string name="insutagram_signUp">outsutagram 회원가입</string>
-    <string name="insutagram_login">outsutagram 로그인</string>
-    <string name="insutagram_post">outsutagram 게시글 작성</string>
+    <string name="app_name">outstagram</string>
+    <string name="insutagram">oututagram</string>
+    <string name="insutagram_signUp">outstagram 회원가입</string>
+    <string name="insutagram_login">outstagram 로그인</string>
+    <string name="insutagram_post">outstagram 게시글 작성</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
